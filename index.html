@@ -69,6 +69,7 @@
   .fcard.open .fcard-body{max-height:none; padding:.4rem 1.2rem 1.3rem;}
 
   .formula{background:var(--formula-soft); border:1px solid var(--formula-line); border-radius:8px; padding:.7rem 1rem; margin:.9rem 0; overflow-x:auto; overflow-y:hidden; text-align:center;}
+  .mlabel{font-family:var(--gothic); font-size:.82rem; color:var(--formula); font-weight:700; display:block; margin-bottom:.25rem;}
   .formula .katex-display{margin:0;}
   .formula .katex{font-size:1.16em;}
   .label{font-family:var(--sans); font-size:.8rem; color:var(--muted); margin:1rem 0 .15rem; font-weight:600;}
@@ -195,9 +196,9 @@
   </div>
   <div class="fcard-body">
     <p>세 모델 모두 같은 <b>신호</b> \(s=\mathbf{w}^T\mathbf{x}=\sum_{i=0}^{d}w_i x_i\)를 쓰고, 마지막 변환 함수만 다르다.</p>
-    <div class="formula">$$\text{분류: } h=\operatorname{sign}(\mathbf{w}^T\mathbf{x})\in\{-1,+1\}$$</div>
-    <div class="formula">$$\text{회귀: } h=\mathbf{w}^T\mathbf{x}\in(-\infty,\infty)$$</div>
-    <div class="formula">$$\text{로지스틱: } h=\theta(\mathbf{w}^T\mathbf{x})\in(0,1)$$</div>
+    <div class="formula"><span class="mlabel">분류</span>$$h=\operatorname{sign}(\mathbf{w}^T\mathbf{x})\in\{-1,+1\}$$</div>
+    <div class="formula"><span class="mlabel">회귀</span>$$h=\mathbf{w}^T\mathbf{x}\in(-\infty,\infty)$$</div>
+    <div class="formula"><span class="mlabel">로지스틱</span>$$h=\theta(\mathbf{w}^T\mathbf{x})\in(0,1)$$</div>
     <div class="src">출처: 슬라이드 p.2, p.7, p.10</div>
 
     <div class="sub prob">
@@ -207,9 +208,9 @@
         <div class="step"><span class="stepn">1</span>세 모델 공통인 신호 \(s\)부터 계산한다(내적):</div>
         <div class="miniformula">$$s=\mathbf{w}^T\mathbf{x}=(-1)(1)+(2)(1)+(1)(3)=-1+2+3=4$$</div>
         <div class="step"><span class="stepn">2</span>이제 모델별 변환 함수만 다르게 적용:</div>
-        <div class="miniformula">$$\text{분류: }\operatorname{sign}(4)=+1$$</div>
-        <div class="miniformula">$$\text{회귀: }4\ \text{(신호 그대로)}$$</div>
-        <div class="miniformula">$$\text{로지스틱: }\theta(4)=\frac{1}{1+e^{-4}}=\frac{1}{1.018}\approx0.982$$</div>
+        <div class="miniformula"><span class="mlabel">분류</span>$$\operatorname{sign}(4)=+1$$</div>
+        <div class="miniformula"><span class="mlabel">회귀</span>$$h=4$$</div>
+        <div class="miniformula"><span class="mlabel">로지스틱</span>$$\theta(4)=\frac{1}{1+e^{-4}}=\frac{1}{1.018}\approx0.982$$</div>
         <div class="answer"><b>답:</b> 분류 \(+1\), 회귀 \(4\), 로지스틱 \(\approx0.98\). <b>핵심</b>: 셋 다 같은 신호 \(s=4\)를 쓰고 마지막 변환만 다르다 — 분류는 부호, 회귀는 그대로, 로지스틱은 \([0,1]\)로 압축.</div>
       </div>
     </div>
@@ -324,8 +325,8 @@
       <div class="sub-body prob-body">
         <div class="qbox"><div class="qlabel"><span class="badge-mk">제작</span> 문제</div>(점1) \(y_1{=}{+}1,\ \mathbf{w}^T\mathbf{x}_1{=}2\). (점2) \(y_2{=}{-}1,\ \mathbf{w}^T\mathbf{x}_2{=}2\). 각 포인트 오차와 \(E_{in}\)? (편의: \(\ln1.135\approx0.127\), \(e^2\approx7.39\), \(\ln8.39\approx2.127\))</div>
         <div class="step"><span class="stepn">1</span>먼저 각 점의 <b>일치 점수</b> \(y_n\mathbf{w}^T\mathbf{x}_n\)를 구한다. 부호가 핵심:</div>
-        <div class="miniformula">$$\text{점1}: (+1)(2)=+2,\qquad \text{점2}: (-1)(2)=-2$$</div>
-        <div class="step"><span class="stepn">2</span>각각 \(\ln(1+e^{-(\text{일치점수})})\)에 대입한다. 점1은 지수가 음수, 점2는 양수가 됨:</div>
+        <div class="miniformula">$$\underbrace{(+1)(2)}_{\text{pt1}}=+2,\qquad \underbrace{(-1)(2)}_{\text{pt2}}=-2$$</div>
+        <div class="step"><span class="stepn">2</span>각각 \(\ln(1+e^{-y_n s})\)에 대입한다(\(y_n s\)=일치 점수). 점1은 지수가 음수, 점2는 양수가 됨:</div>
         <div class="miniformula">$$e_1=\ln(1+e^{-2})=\ln1.135\approx0.127$$</div>
         <div class="miniformula">$$e_2=\ln(1+e^{+2})=\ln8.39\approx2.127$$</div>
         <div class="step"><span class="stepn">3</span>\(E_{in}\)은 두 오차의 평균:</div>
@@ -385,7 +386,8 @@
         <div class="step">신뢰도 = (둘 다) ÷ (전제):</div>
         <div class="miniformula">$$conf=\frac{sc(\{milk,bread\})}{sc(\{milk\})}=\frac{3}{4}=0.75$$</div>
         <div class="step"><span class="stepn">b</span>지지도는 전체 거래 수로 나눈다:</div>
-        <div class="miniformula">$$support=\frac{3}{5}=0.6\ge0.5\ \Rightarrow\ \text{빈발 ✓}$$</div>
+        <div class="miniformula">$$support=\frac{3}{5}=0.6\ge0.5$$</div>
+        <div class="step" style="margin:.2rem 0 .5rem;">→ 빈발 ✓</div>
         <div class="answer"><b>답:</b> (a) 75% (b) 빈발. <b>핵심</b>: 신뢰도 분모는 전제(A) 지지도라 방향 따라 값이 달라진다. 지지도 분모는 항상 전체 거래 수.</div>
       </div>
     </div>
@@ -398,8 +400,8 @@
     <span class="fchev">▶</span><span class="fcard-title">Apriori — 강한 규칙 · 조합폭발 · 절차</span><span class="ftag">공식</span>
   </div>
   <div class="fcard-body">
-    <div class="formula">$$\text{강한 규칙: } support\ge min\_sup \ \textbf{AND}\ confidence\ge min\_conf$$</div>
-    <div class="formula">$$\text{부분집합 수: } 2^{n}-1$$</div>
+    <div class="formula"><span class="mlabel">강한 규칙</span>$$support\ge min\_sup \ \textbf{AND}\ confidence\ge min\_conf$$</div>
+    <div class="formula"><span class="mlabel">부분집합 수</span>$$2^{n}-1$$</div>
     <p><b>Apriori 성질(반단조성)</b>: 빈발 집합의 모든 부분집합도 빈발. 대우 — 빈발하지 않으면 그 상위집합도 빈발하지 않음 → 가지치기 근거. (p.14)</p>
     <div class="label">절차</div>
     <ul>
@@ -701,7 +703,7 @@
         <div class="step"><span class="stepn">1</span>각 점의 \(\varepsilon\)-이웃(거리 \(\le1.5\)) 개수, 자기 자신 포함:</div>
         <div class="miniformula">$$N(1){=}\{1,2\}{\to}2,\ N(2){=}\{1,2,3\}{\to}3,\ N(3){=}\{2,3\}{\to}2,\ N(10){=}\{10\}{\to}1$$</div>
         <div class="step"><span class="stepn">2</span>core 판정(개수 \(\ge MinPts{=}2\)):</div>
-        <div class="miniformula">$$1,2,3\to\text{core},\qquad 10\to\text{core 아님}$$</div>
+        <div class="miniformula">$$1,2,3\ \Rightarrow\ \text{core},\qquad 10\ \Rightarrow\ \text{not core}$$</div>
         <div class="step"><span class="stepn">3</span>10이 어떤 core의 이웃인지 확인 — 가장 가까운 core 3과 거리 7 > 1.5:</div>
         <div class="miniformula">$$10\to\text{noise}$$</div>
         <div class="answer"><b>답:</b> 1,2,3 = core(한 클러스터), 10 = noise. <b>핵심</b>: 이웃 셀 때 자기 포함 여부를 먼저 확정. border는 "core가 아니면서 어떤 core의 이웃"일 때만.</div>
@@ -716,7 +718,8 @@
     <span class="fchev">▶</span><span class="fcard-title">Dunn Index · Silhouette ★</span><span class="ftag">공식</span>
   </div>
   <div class="fcard-body">
-    <div class="formula">$$DI=\frac{\delta}{\Delta}\quad(\delta=\text{간 최소거리},\ \Delta=\text{내 최대거리})$$</div>
+    <div class="formula">$$DI=\frac{\delta}{\Delta}$$</div>
+    <p style="font-size:.9rem;margin:.2rem 0 .6rem;">\(\delta\) = 클러스터 <b>간</b> 최소거리, \(\Delta\) = 클러스터 <b>내</b> 최대거리</p>
     <div class="formula">$$a(o)=\frac{\sum_{o'\in C_i,o'\neq o}dist}{|C_i|-1}\quad b(o)=\min_{j\neq i}\frac{\sum_{o'\in C_j}dist}{|C_j|}$$</div>
     <div class="formula">$$s(o)=\frac{b(o)-a(o)}{\max\{a(o),b(o)\}}\in[-1,1]$$</div>
     <p>Dunn·Silhouette 모두 클수록 좋음. \(a\) 분모는 \(|C_i|-1\), \(b\) 분모는 \(|C_j|\) 주의. (p.27,28)</p>
@@ -876,6 +879,31 @@
         <div class="miniformula">$$\hat{x}_1=-\sqrt2\cdot\tfrac1{\sqrt2}(1,1)+(3,3)=(2,2)=x_1\ ✓$$</div>
         <div class="answer"><b>답:</b> 1D 좌표 \((-\sqrt2,0,\sqrt2)\), 재구성 오차 0 (\(\lambda_2{=}0\)이라 버린 방향에 정보 없음). 검산: \(\lambda_1+\lambda_2=2=\operatorname{trace}(S)=1+1\) ✓</div>
         <div class="note"><b>시험 팁(고유벡터 주어짐):</b> ① 중심화 → ② 주어진 \(u_1\)에 내적 → ③ \(z u_1+\mu\)만 하면 끝. 특성방정식 \(\det(S-\lambda I)=0\) 푸는 단계는 생략 가능.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fcard open">
+  <div class="fcard-head" onclick="ftoggle(this)">
+    <span class="fchev">▶</span><span class="fcard-title">📊 PCA 전 과정 3D 시각화 (8단계 통합)</span><span class="ftag" style="background:#c2570c">시각화</span>
+  </div>
+  <div class="fcard-body">
+    <p>PCA의 8단계를 하나의 3D 데이터로 관통해서 보여줘. <b>"다음" 버튼</b>으로 중심화 → 공분산 → 고유벡터 → 투영 → 재구성을 차례로 넘기고, <b>캔버스를 드래그</b>하면 3D 공간을 직접 돌려볼 수 있어.</p>
+    <div class="sub viz" data-viz="pca3d">
+      <div class="sub-head" onclick="stoggle(this)"><span class="sub-chev">▶</span><span class="sub-icon">📊</span> 3D 스테퍼 열기 (중심화·공분산 타원체·투영 평면)<span class="sub-count">드래그 회전</span></div>
+      <div class="sub-body">
+        <div class="viz-wrap">
+          <div id="p3_ind" style="display:flex;gap:4px;margin-bottom:10px;"></div>
+          <canvas id="cv_pca3d" width="560" height="380" style="cursor:grab;touch-action:none;"></canvas>
+          <div class="viz-ctrl">
+            <button class="viz-btn" id="p3_prev">← 이전</button>
+            <button class="viz-btn" id="p3_next">다음 →</button>
+            <button class="viz-btn" id="p3_reset">↺ 처음</button>
+            <span style="font-size:.76rem;color:#999;margin-left:auto;">🖱️ 드래그로 회전</span>
+          </div>
+          <div class="viz-readout" id="p3_panel"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1179,6 +1207,102 @@ window.VIZ={};
       ctx.fillStyle='#c2570c';ctx.font='bold 12px sans-serif';ctx.fillText('병목 k='+k,xs[2],26);ctx.textAlign='left';
       const over=k>=d;$('ae_ro').innerHTML='잠재 차원 k = <b style="color:#c2570c">'+k+'</b>, 입력 차원 d = '+d+'<br>'+(over?'<b style="color:#9c3a26">k ≥ d (overcomplete)</b>: 차원만으론 압축 강제 안 됨 → 항등 사상 위험, 정규화 필요':'<b style="color:#0f7a52">k < d (undercomplete)</b>: 명시적 압축 발생, 핵심 구조만 통과');}
     $('ae_k').addEventListener('input',draw);draw();
+  };
+
+  window.VIZ.pca3d=function(){
+    const cv=$('cv_pca3d'); if(!cv||cv.dataset.done)return; cv.dataset.done=1; const ctx=cv.getContext('2d');
+    const W=cv.width,H=cv.height,cx=W/2,cy=H/2,sc=40;
+    const C_INK='#1a1a18',C_GRID='#e2e2dc',C_BLUE='#185FA5',C_GREEN='#3B6D11',C_CORAL='#c2570c',C_GRAYV='#b4b2a9';
+    const raw=[[-3,-2,-1],[-2,-2.5,-0.5],[-1,-0.5,-1],[0,0.5,0.3],[1,0.8,0.6],[2,2.2,1.1],[3,2.5,1.4],[-1.5,-1.2,-0.8],[1.8,1.5,0.9],[0.5,-0.3,0.2],[-2.5,-1.8,-1.2],[2.4,2.0,1.0]];
+    let mean=[0,0,0];raw.forEach(p=>{mean[0]+=p[0];mean[1]+=p[1];mean[2]+=p[2];});mean=mean.map(v=>v/raw.length);
+    const cen=raw.map(p=>[p[0]-mean[0],p[1]-mean[1],p[2]-mean[2]]);
+    function cov(d){const n=d.length;let C=[[0,0,0],[0,0,0],[0,0,0]];d.forEach(p=>{for(let i=0;i<3;i++)for(let j=0;j<3;j++)C[i][j]+=p[i]*p[j];});return C.map(r=>r.map(v=>v/(n-1)));}
+    function mvm(M,v){return M.map(r=>r[0]*v[0]+r[1]*v[1]+r[2]*v[2]);}
+    function nrm(v){const m=Math.hypot.apply(null,v);return v.map(x=>x/m);}
+    function pIt(M,seed){let v=nrm(seed);for(let i=0;i<80;i++)v=nrm(mvm(M,v));return v;}
+    function eg(M,v){const Mv=mvm(M,v);return v[0]*Mv[0]+v[1]*Mv[1]+v[2]*Mv[2];}
+    const Cm=cov(cen);let pc1=pIt(Cm,[1,0.5,0.2]);const l1=eg(Cm,pc1);
+    let Cd=Cm.map((r,i)=>r.map((val,j)=>val-l1*pc1[i]*pc1[j]));let pc2=nrm(pIt(Cd,[0.2,1,0.3]));const l2=eg(Cm,pc2);
+    let pc3=nrm([pc1[1]*pc2[2]-pc1[2]*pc2[1],pc1[2]*pc2[0]-pc1[0]*pc2[2],pc1[0]*pc2[1]-pc1[1]*pc2[0]]);const l3=eg(Cm,pc3);
+    const ev=[Math.sqrt(l1),Math.sqrt(l2),Math.sqrt(l3)],pcs=[pc1,pc2,pc3];
+    let rotX=-0.5,rotY=0.7,drag=false,lx=0,ly=0,step=0;
+    function rot(p){let x=p[0],y=p[1],z=p[2];let x1=x*Math.cos(rotY)-z*Math.sin(rotY),z1=x*Math.sin(rotY)+z*Math.cos(rotY);let y2=y*Math.cos(rotX)-z1*Math.sin(rotX),z2=y*Math.sin(rotX)+z1*Math.cos(rotX);return[x1,y2,z2];}
+    function pr(p){const r=rot(p);return[cx+r[0]*sc,cy-r[1]*sc,r[2]];}
+    const matStr='S = [[4.16, 3.44, 1.84], [3.44, 3.04, 1.51], [1.84, 1.51, 0.88]]';
+    const steps=[
+      {t:'0단계 — 원본 데이터',d:'아직 아무 처리도 안 한 원본 3D 데이터(회색). 평균(주황 ✕)이 원점에서 벗어나 있는 게 보여. 드래그해서 데이터가 어떻게 퍼져 있는지 살펴봐.'},
+      {t:'1단계 — 중심화',d:'원본에서 평균을 빼서 원점으로 이동. 회색(원본)→검정(중심화)으로 각 점이 화살표만큼 옮겨졌어. 이제 평균이 정확히 원점(0,0,0).'},
+      {t:'2단계 — 공분산 행렬',d:'중심화 데이터로 3×3 공분산 S 계산. 보라 타원체가 데이터의 퍼짐(분산 모양). 한 방향으로 길쭉 → 그쪽 분산이 큼.<br><span style="font-size:.8rem;color:#666">'+matStr+'</span>'},
+      {t:'3단계 — 목적함수',d:'투영 분산이 최대가 되는 단위 방향 w: max wᵀSw, ‖w‖=1. (수식 단계 — 그림 변화 없음)'},
+      {t:'4단계 — 고유값 문제',d:'풀면 Sw=λw. 최적 방향=고유벡터, 분산=고유값. 파란 화살표=제1주성분(타원체가 가장 긴 방향과 일치).'},
+      {t:'5단계 — 주성분 정렬',d:'고유값 크기순. 파랑 PC1(λ₁='+l1.toFixed(2)+'), 초록 PC2(λ₂='+l2.toFixed(2)+'), 회색 PC3(λ₃='+l3.toFixed(2)+', 가장 작음).'},
+      {t:'6단계 — 투영(인코딩)',d:'데이터를 PC1·PC2 평면(파란 반투명)에 투영. 주황 점=평면에 내린 그림자. 3D→2D 압축.'},
+      {t:'7단계 — 재구성(디코딩)',d:'2D 좌표를 3D로 되돌리고 평균을 더함. 버린 PC3 정보만큼 오차. 점선=원본↔재구성 거리.'},
+      {t:'8단계 — 설명 분산 비율',d:'PC1+PC2 = '+((l1+l2)/(l1+l2+l3)*100).toFixed(0)+'% 설명 → 3D를 2D로 줄여도 정보 거의 보존(PC3 버림).'}
+    ];
+    function axis(){const ax=[[[-4,0,0],[4,0,0]],[[0,-4,0],[0,4,0]],[[0,0,-4],[0,0,4]]];ctx.strokeStyle=C_GRID;ctx.lineWidth=1;ax.forEach(function(seg){const pa=pr(seg[0]),pb=pr(seg[1]);ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pb[0],pb[1]);ctx.stroke();});}
+    function cross(p3,col,r){const s=pr(p3);ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(s[0]-r,s[1]-r);ctx.lineTo(s[0]+r,s[1]+r);ctx.moveTo(s[0]+r,s[1]-r);ctx.lineTo(s[0]-r,s[1]+r);ctx.stroke();}
+    function arr(dir,len,col,lw){const a=pr([0,0,0]),b=pr([dir[0]*len,dir[1]*len,dir[2]*len]);ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();ctx.fillStyle=col;ctx.beginPath();ctx.arc(b[0],b[1],4,0,7);ctx.fill();}
+    function planeP(p){const c1=p[0]*pc1[0]+p[1]*pc1[1]+p[2]*pc1[2],c2=p[0]*pc2[0]+p[1]*pc2[1]+p[2]*pc2[2];return[c1*pc1[0]+c2*pc2[0],c1*pc1[1]+c2*pc2[1],c1*pc1[2]+c2*pc2[2]];}
+    function ellipsoid(){
+      // wireframe: draw 3 rings (one per principal plane pair) scaled by sqrt(eigenvalue)
+      const rings=[[0,1],[0,2],[1,2]];
+      ctx.strokeStyle='#7f77dd88';ctx.lineWidth=1.2;
+      rings.forEach(function(pair){
+        ctx.beginPath();
+        for(let a=0;a<=64;a++){
+          const th=a/64*Math.PI*2;
+          const e1=pair[0],e2=pair[1];
+          const co=Math.cos(th)*ev[e1],si=Math.sin(th)*ev[e2];
+          const wp=[pcs[e1][0]*co+pcs[e2][0]*si,pcs[e1][1]*co+pcs[e2][1]*si,pcs[e1][2]*co+pcs[e2][2]*si];
+          const s=pr(wp);a?ctx.lineTo(s[0],s[1]):ctx.moveTo(s[0],s[1]);
+        }
+        ctx.stroke();
+      });
+    }
+    function plane(){
+      // semi-transparent quad spanned by pc1*L1, pc2*L2
+      const L1=3.4,L2=2.4;
+      const corners=[[L1,L2],[L1,-L2],[-L1,-L2],[-L1,L2]].map(function(c){return pr([pc1[0]*c[0]+pc2[0]*c[1],pc1[1]*c[0]+pc2[1]*c[1],pc1[2]*c[0]+pc2[2]*c[1]]);});
+      ctx.fillStyle='#185FA51a';ctx.strokeStyle='#185FA577';ctx.lineWidth=1.5;
+      ctx.beginPath();corners.forEach(function(p,i){i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]);});ctx.closePath();ctx.fill();ctx.stroke();
+    }
+    function draw(){
+      ctx.clearRect(0,0,W,H);axis();
+      if(step===2)ellipsoid();
+      if(step>=7)plane();
+      if(step===0){
+        // 원본만: 회색 점 + 평균 ✕ (중심화 전)
+        raw.forEach(function(p){const s=pr(p);ctx.fillStyle=C_GRAYV;ctx.beginPath();ctx.arc(s[0],s[1],4.5,0,7);ctx.fill();});
+        cross(mean,C_CORAL,6);
+      } else if(step===1){
+        // 중심화: 회색 원본(흐리게) + 이동 화살표 + 검정 중심화 점 + 원점 십자
+        raw.forEach(function(p){const s=pr(p);ctx.fillStyle='#cfcfc8';ctx.beginPath();ctx.arc(s[0],s[1],3.5,0,7);ctx.fill();});
+        raw.forEach(function(p,i){const a=pr(p),b=pr(cen[i]);ctx.strokeStyle='#c2570c88';ctx.lineWidth=1.3;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();ctx.setLineDash([]);
+          // 작은 화살촉
+          const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);if(L>8){const ux=dx/L,uy=dy/L;ctx.strokeStyle='#c2570c88';ctx.beginPath();ctx.moveTo(b[0],b[1]);ctx.lineTo(b[0]-6*ux+3*uy,b[1]-6*uy-3*ux);ctx.moveTo(b[0],b[1]);ctx.lineTo(b[0]-6*ux-3*uy,b[1]-6*uy+3*ux);ctx.stroke();}});
+        cen.forEach(function(p){const s=pr(p);ctx.fillStyle=C_INK;ctx.beginPath();ctx.arc(s[0],s[1],4.5,0,7);ctx.fill();});
+        cross([0,0,0],C_INK,5);
+        return;
+      }
+      // step>=2: 중심화된 검정 점이 기본
+      if(step>=2)cen.forEach(function(p){const s=pr(p);ctx.fillStyle=C_INK;ctx.beginPath();ctx.arc(s[0],s[1],4,0,7);ctx.fill();});
+      if(step>=4)arr(pc1,3.0,C_BLUE,2.5);
+      if(step>=5){arr(pc2,2.0,C_GREEN,2.5);if(step>=5&&step<=6)arr(pc3,1.3,C_GRAYV,1.5);}
+      if(step>=6){cen.forEach(function(p){const pp=planeP(p),spt=pr(p),spp=pr(pp);if(step>=7){ctx.strokeStyle='#c2570c66';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(spt[0],spt[1]);ctx.lineTo(spp[0],spp[1]);ctx.stroke();ctx.setLineDash([]);}ctx.fillStyle=C_CORAL;ctx.beginPath();ctx.arc(spp[0],spp[1],3.5,0,7);ctx.fill();});}
+      var dots=cv.parentNode.querySelectorAll('.p3dot');for(var i=0;i<dots.length;i++)dots[i].style.background=i===step?C_BLUE:(i<step?'#9bc0e0':'#e0e0d8');
+      $('p3_panel').innerHTML='<b style="color:'+C_BLUE+';font-size:.95rem;">'+steps[step].t+'</b><br>'+steps[step].d;
+      $('p3_prev').disabled=step===0;$('p3_next').disabled=step===steps.length-1;
+    }
+    var ind=$('p3_ind');ind.innerHTML=steps.map(function(){return '<span class="p3dot" style="flex:1;height:5px;border-radius:3px;background:#e0e0d8;"></span>';}).join('');
+    $('p3_next').onclick=function(){if(step<steps.length-1){step++;draw();}};
+    $('p3_prev').onclick=function(){if(step>0){step--;draw();}};
+    $('p3_reset').onclick=function(){step=0;rotX=-0.5;rotY=0.7;draw();};
+    cv.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;ly=e.clientY;cv.setPointerCapture&&cv.setPointerCapture(e.pointerId);});
+    cv.addEventListener('pointermove',function(e){if(!drag)return;rotY+=(e.clientX-lx)*0.01;rotX+=(e.clientY-ly)*0.01;lx=e.clientX;ly=e.clientY;draw();});
+    cv.addEventListener('pointerup',function(){drag=false;});
+    cv.addEventListener('pointerleave',function(){drag=false;});
+    draw();
   };
 })();
 
